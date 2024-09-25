@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+
+  padding: 0 64px;
+
+  color: var(--inputs);
+
+  background-image: url(../../assets/home@1x.webp);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 88vh;
+}
+
+@media (min-resolution: 2dppx) {
+  .container {
+    background-image: url(../../assets/home@2x.webp);
+  }
+}
+
+.title {
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 67%;
+  margin-bottom: 16px;
+}
+
+.text {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 133%;
+  margin-bottom: 40px;
+}
+
+.btn {
+  padding: 16px 48.5px;
+}
