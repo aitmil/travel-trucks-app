@@ -1,10 +1,95 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: 'Inter', sans-serif;
   font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--inputs);
+  color: var(--main);
+
+  /* ===== colors ===== */
+
+  --main: #101828;
+  --text: #475467;
+  --white: #fff;
+  --inputs: #f7f7f7;
+  --badges: #f2f4f7;
+  --gray: #6c717b;
+  --gray-light: #dadde1;
+  --button: #e44848;
+  --button-hover: #d84343;
+  --rating: #ffc531;
+
+  /* ======= transition ===== */
+  --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ======== Reset styles ======== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a:focus,
+input:focus,
+textarea:focus,
+a:active,
+input:active,
+textarea:active {
+  outline: none;
+}
+
+a,
+input,
+textarea {
+  outline: none;
+}
+
+/* ============== Common styles ============= */
+
+.btn {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+  background-color: var(--button);
+  color: var(--white);
+  border: none;
+  border-radius: 200px;
+  transition: background-color var(--transition);
+}
+
+.btn:hover {
+  background-color: var(--button-hover);
 }
