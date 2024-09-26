@@ -13,7 +13,7 @@ export default function Navigation() {
         Home
       </NavLink>
 
-      <NavLink className={getLinkClass} to="/contacts">
+      <NavLink className={getLinkClass} to="/catalog">
         Catalog
       </NavLink>
     </nav>
