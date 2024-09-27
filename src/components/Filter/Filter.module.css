@@ -1,0 +1,79 @@
+.title {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--gray);
+}
+
+.inputWrapper {
+  position: relative;
+  margin: 8px 0 40px;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 20px 16px 48px;
+
+  background-color: var(--inputs);
+}
+
+.input::placeholder {
+  color: var(--gray);
+}
+
+.filterTitle {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+
+  margin: 32px 0 24px;
+}
+
+.filterList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  width: 360px;
+  padding-top: 24px;
+  margin-bottom: 40px;
+  border-top: 1px solid var(--gray-light);
+}
+
+.btnFilter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  width: 112px;
+  height: 96px;
+  border-radius: 12px;
+
+  text-transform: capitalize;
+  text-align: center;
+  background-color: transparent;
+}
+
+.inActiveFilter {
+  border: 1px solid var(--gray-light);
+}
+
+.activeFilter {
+  border: 1px solid var(--button);
+}
+
+.btn {
+  padding: 16px 56.5px;
+}
