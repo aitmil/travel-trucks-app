@@ -1,0 +1,18 @@
+.errorBox {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+  /* width: calc(100vw - 472px); */
+}
+
+.iconMain {
+  margin: 0 auto;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
