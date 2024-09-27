@@ -5,8 +5,8 @@ const initialState = {
   truckEquipment: {
     automatic: false,
     kitchen: false,
-    ac: false,
-    tv: false,
+    AC: false,
+    TV: false,
     bathroom: false,
   },
   truckType: {
@@ -25,7 +25,9 @@ const filterSlice = createSlice({
     },
     toggleTruckEquipment(state, action) {
       const key = action.payload;
-      state.truckEquipment[key] = !state.truckEquipment[key];
+      if (key in state.truckEquipment) {
+        state.truckEquipment[key] = !state.truckEquipment[key];
+      }
     },
     setTruckType(state, action) {
       const selectedType = action.payload;
