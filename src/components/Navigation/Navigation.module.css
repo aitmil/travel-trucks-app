@@ -6,3 +6,7 @@
 .active {
   color: var(--button-hover);
 }
+
+.link {
+  font-weight: 500;
+}
