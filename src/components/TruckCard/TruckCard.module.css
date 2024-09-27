@@ -1,0 +1,89 @@
+.img {
+  border-radius: 10px;
+  width: 292px;
+  object-fit: cover;
+  height: 320px;
+}
+
+.titleBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.priceBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 8px;
+}
+
+.heartButton {
+  background: none;
+  border: none;
+}
+
+.heartIcon {
+  fill: inherit;
+  transition: fill 0.3s ease;
+}
+
+.activeHeart .heartIcon {
+  fill: var(--button);
+}
+
+.reviewBox {
+  display: flex;
+  gap: 16px;
+
+  margin-bottom: 24px;
+}
+
+.review {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star {
+  fill: var(--rating);
+}
+
+.text {
+  width: 525px;
+  margin-bottom: 24px;
+
+  color: var(--text);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  width: 391px;
+  margin-bottom: 40px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-basis: calc(100% / 3 - 16px);
+
+  padding: 12px 18px;
+  border-radius: 100px;
+
+  background-color: var(--badges);
+}
+
+.btn {
+  padding: 16px 40px;
+}
