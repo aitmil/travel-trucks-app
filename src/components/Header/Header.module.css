@@ -1,6 +1,15 @@
 .header {
+  padding: 28px 64px;
+  border-bottom: 1px solid var(--badges);
+
+  background-color: var(--inputs);
+}
+
+.container {
   display: flex;
   align-items: center;
   gap: 450px;
-  padding: 28px 64px;
+
+  max-width: 1312px;
+  margin: 0 auto;
 }
