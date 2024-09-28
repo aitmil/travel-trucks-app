@@ -18,6 +18,14 @@
   pointer-events: none;
 }
 
+.inputEmpty {
+  fill: var(--gray);
+}
+
+.inputFilled {
+  fill: var(--main);
+}
+
 .input {
   width: 100%;
   border: none;

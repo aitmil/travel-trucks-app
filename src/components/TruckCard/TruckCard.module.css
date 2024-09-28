@@ -46,6 +46,10 @@
   gap: 4px;
 }
 
+.textReview {
+  text-decoration: underline;
+}
+
 .location {
   display: flex;
   align-items: center;
@@ -54,6 +58,10 @@
 
 .star {
   fill: var(--rating);
+}
+
+.map {
+  fill: var(--main);
 }
 
 .text {
@@ -68,13 +76,14 @@
   flex-wrap: wrap;
   gap: 8px;
 
-  width: 391px;
+  width: 392px;
   margin-bottom: 40px;
 }
 
 .item {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   flex-basis: calc(100% / 3 - 16px);
 
