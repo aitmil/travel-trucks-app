@@ -9,6 +9,7 @@ import {
 } from '../../redux/filters/slice';
 import { fetchTrucks } from '../../redux/trucks/operations';
 import { selectFilters } from '../../redux/filters/selectors';
+import { clearTrucks } from '../../redux/trucks/slice';
 
 import icons from '../../assets/icons.svg';
 import { formatString, equipmentIcons, typeIcons } from '../../js/utils';
@@ -69,6 +70,7 @@ export default function Filter() {
   };
 
   const handleSearch = () => {
+    dispatch(clearTrucks());
     dispatch(setLocation(locationRef.current));
 
     Object.keys(truckTypeRef.current).forEach(type => {
@@ -90,12 +92,18 @@ export default function Filter() {
     <section className={css.section}>
       <h2 className={css.title}>Location</h2>
       <div className={css.inputWrapper}>
-        <svg className={css.inputIcon} width={20} height={20}>
+        <svg
+          className={`${css.inputIcon} ${
+            locationRef.current ? css.inputFilled : css.inputEmpty
+          }`}
+          width={20}
+          height={20}
+        >
           <use xlinkHref={`${icons}#icon-map`} />
         </svg>
         <input
           type="text"
-          placeholder="Kyiv, Ukraine"
+          placeholder="City"
           onChange={handleLocationChange}
           className={css.input}
         />
