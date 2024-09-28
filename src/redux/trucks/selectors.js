@@ -2,6 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { selectFilters } from '../filters/selectors';
 
 export const selectTrucks = state => state.trucks.items;
+export const selectTotal = state => state.trucks.total;
 export const selectLoading = state => state.trucks.loading;
 export const selectError = state => state.trucks.error;
 
@@ -20,6 +21,11 @@ export const selectFilteredTrucks = createSelector(
 
       const matchesEquipment = Object.keys(filters.truckEquipment).every(
         key => {
+          if (key === 'automatic') {
+            return filters.truckEquipment[key]
+              ? truck.transmission === 'automatic'
+              : true;
+          }
           return !filters.truckEquipment[key] || truck[key];
         }
       );

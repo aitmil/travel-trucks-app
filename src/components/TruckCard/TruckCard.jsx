@@ -16,7 +16,7 @@ export default function TruckCard({
     rating,
     reviews,
     description,
-    automatic,
+    transmission,
     petrol,
     kitchen,
     AC,
@@ -63,10 +63,12 @@ export default function TruckCard({
             <svg className={css.star} width={16} height={16}>
               <use xlinkHref={`${icons}#icon-star`} />
             </svg>
-            <p>{`${rating} (${reviews.length} Reviews)`}</p>
+            <p
+              className={css.textReview}
+            >{`${rating}(${reviews.length} Reviews)`}</p>
           </div>
           <div className={css.location}>
-            <svg className={css.star} width={16} height={16}>
+            <svg className={css.map} width={16} height={16}>
               <use xlinkHref={`${icons}#icon-map`} />
             </svg>
             <p>{formatLocation(location)}</p>
@@ -74,7 +76,7 @@ export default function TruckCard({
         </div>
         <p className={css.text}>{truncateText(description)}</p>
         <ul className={css.list}>
-          {automatic && (
+          {transmission === 'automatic' && (
             <li className={css.item}>
               <svg className={css.icon} width={20} height={20}>
                 <use xlinkHref={`${icons}#icon-diagram`} />
