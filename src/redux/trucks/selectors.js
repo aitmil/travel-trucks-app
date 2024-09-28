@@ -28,3 +28,5 @@ export const selectFilteredTrucks = createSelector(
     });
   }
 );
+
+export const selectTruck = state => state.trucks.truck;
