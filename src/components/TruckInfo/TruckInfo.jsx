@@ -21,7 +21,7 @@ export default function TruckInfo({
           </div>
 
           <div className={css.location}>
-            <svg className={css.star} width={16} height={16}>
+            <svg className={css.map} width={16} height={16}>
               <use xlinkHref={`${icons}#icon-map`} />
             </svg>
             <p>{formatLocation(location)}</p>
@@ -35,7 +35,7 @@ export default function TruckInfo({
             <li className={css.item} key={index}>
               <img
                 className={css.img}
-                src={image.thumb}
+                src={image.original}
                 alt="photo of truck"
               ></img>
             </li>

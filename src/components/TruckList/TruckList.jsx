@@ -9,8 +9,8 @@ export default function TruckList() {
   return (
     <>
       <ul className={css.list}>
-        {filteredTrucks.map(truck => (
-          <li className={css.item} key={truck.id}>
+        {filteredTrucks.map((truck, index) => (
+          <li className={css.item} key={index}>
             <TruckCard truck={truck} />
           </li>
         ))}

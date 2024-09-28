@@ -27,6 +27,10 @@
   fill: var(--rating);
 }
 
+.map {
+  fill: var(--main);
+}
+
 .reviewText {
   text-decoration: underline;
 }
