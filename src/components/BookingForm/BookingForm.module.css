@@ -20,3 +20,76 @@
   color: var(--gray);
   margin-bottom: 24px;
 }
+
+.fieldWrapper {
+  position: relative;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fieldWrapper {
+  position: relative;
+}
+
+.input,
+.textarea {
+  position: relative;
+  border: none;
+  border-radius: 12px;
+  padding: 18px;
+  width: 100%;
+
+  background-color: var(--inputs);
+  transition: border var(--transition);
+}
+
+.textarea {
+  margin-bottom: 10px;
+  height: 118px;
+}
+
+.inputError::placeholder,
+.inputError {
+  color: transparent;
+}
+
+.inputError {
+  border: 1px solid var(--button);
+  color: transparent;
+}
+
+.error {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: var(--button);
+}
+
+.btn {
+  padding: 16px 63px;
+  width: 166px;
+  margin: 0 auto;
+}
+
+/* Custom calendar styling */
+
+.customCalendar {
+  background-color: var(--white);
+}
+
+.popper {
+  background-color: var(--white);
+}
+
+.day {
+  color: var(--text);
+}
+
+.month {
+  color: #ffffff;
+}

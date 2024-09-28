@@ -1,23 +1,32 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import clsx from 'clsx';
+import ReactDatePicker from 'react-datepicker';
+import { subDays } from 'date-fns';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import { BookingSchema } from '../../js/validation';
 import css from './BookingForm.module.css';
-import axios from 'axios';
 
 export default function BookingForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [placeholder, setPlaceholder] = useState('Booking date*');
+
+  const mockPostRequest = values => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve({ data: 'Success' });
+      }, 1000);
+    });
+  };
 
   const handleSubmit = async (values, actions) => {
-    setIsSubmitting(true);
     try {
-      await axios.post('/api/bookings', values);
+      await mockPostRequest(values);
       toast.success('Booking successful!');
       actions.resetForm();
     } catch {
       toast.error('Booking error!');
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -27,51 +36,86 @@ export default function BookingForm() {
       <p className={css.text}>
         Stay connected! We are always ready to help you.
       </p>
+
       <Formik
-        initialValues={{ name: '', email: '', date: '', comment: '' }}
+        initialValues={{ name: '', email: '', date: null, comment: '' }}
         validationSchema={BookingSchema}
         onSubmit={handleSubmit}
       >
-        {() => (
+        {({ values, errors, touched, setFieldValue }) => (
           <Form className={css.form} autoComplete="off">
-            <Field
-              className={css.input}
-              type="text"
-              name="name"
-              placeholder="Name*"
-            />
-            <ErrorMessage className={css.error} name="name" component="span" />
+            <div className={css.fieldWrapper}>
+              <Field
+                className={`${css.input} ${
+                  errors.name && touched.name ? css.inputError : ''
+                }`}
+                type="text"
+                name="name"
+                placeholder="Name*"
+              />
+              <ErrorMessage
+                name="name"
+                component="span"
+                className={css.error}
+              />
+            </div>
 
-            <Field
-              className={css.input}
-              type="email"
-              name="email"
-              placeholder="Email*"
-            />
-            <ErrorMessage className={css.error} name="email" component="span" />
+            <div className={css.fieldWrapper}>
+              <Field
+                className={`${css.input} ${
+                  errors.email && touched.email ? css.inputError : ''
+                }`}
+                type="email"
+                name="email"
+                placeholder="Email*"
+              />
+              <ErrorMessage
+                name="email"
+                component="span"
+                className={css.error}
+              />
+            </div>
 
-            <Field
-              className={css.input}
-              type="date"
-              name="date"
-              placeholder="Booking date*"
+            <ReactDatePicker
+              name={'date'}
+              selected={values.date}
+              onChange={date => setFieldValue('date', date)}
+              dateFormat="dd-MM-yyyy"
+              minDate={subDays(new Date(), 0)}
+              placeholderText={placeholder}
+              onFocus={() => setPlaceholder('Select a date after today')}
+              onBlur={() => {
+                if (!values.date) setPlaceholder('Booking date*');
+              }}
+              className={`${css.input} ${
+                errors.date && touched.date ? css.inputError : ''
+              }`}
+              calendarClassName={css.customCalendar}
+              popperClassName={css.popper}
+              dayClassName={() => css.day}
+              monthClassName={() => css.month}
             />
-            <ErrorMessage className={css.error} name="date" component="span" />
 
-            <Field
-              className={css.textarea}
-              as="textarea"
-              name="comment"
-              placeholder="Comment"
-            />
-            <ErrorMessage
-              className={css.error}
-              name="comment"
-              component="span"
-            />
+            <ErrorMessage name="date" component="span" className={css.error} />
 
-            <button className={css.btn} type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Sending...' : 'Send'}
+            <div className={css.fieldWrapper}>
+              <Field
+                as="textarea"
+                className={`${css.textarea} ${
+                  errors.comment && touched.comment ? css.inputError : ''
+                }`}
+                name="comment"
+                placeholder="Comment"
+              />
+              <ErrorMessage
+                name="comment"
+                component="span"
+                className={css.error}
+              />
+            </div>
+
+            <button className={clsx(css.btn, 'btn')} type="submit">
+              Send
             </button>
           </Form>
         )}
