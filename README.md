@@ -26,7 +26,8 @@ while planning their trips.
 
 ## Installation
 
-You can access the web application by url: **https://**
+You can access the web application by url:
+**[https://travel-trucks-app-plum.vercel.app/](https://travel-trucks-app-plum.vercel.app/)**
 
 ---
 
