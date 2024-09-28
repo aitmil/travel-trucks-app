@@ -29,6 +29,16 @@ export const truncateText = text => {
   return text.substring(0, 61) + '...';
 };
 
+export const formatDimension = dimension => {
+  const match = dimension.match(/([\d.]+)/);
+  const unit = dimension.includes('m')
+    ? 'm'
+    : dimension.includes('l')
+    ? 'l'
+    : '';
+  return match ? `${match[0]} ${unit}` : '';
+};
+
 export const equipmentIcons = {
   automatic: 'icon-diagram',
   kitchen: 'icon-cup-hot',
