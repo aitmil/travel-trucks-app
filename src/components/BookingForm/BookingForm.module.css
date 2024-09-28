@@ -1,0 +1,22 @@
+.section {
+  position: absolute;
+  bottom: 80px;
+  right: 64px;
+  width: 641px;
+  padding: 44px 57px;
+  border: 1px solid var(--gray-light);
+  border-radius: 10px;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+
+  margin-bottom: 8px;
+}
+
+.text {
+  color: var(--gray);
+  margin-bottom: 24px;
+}
