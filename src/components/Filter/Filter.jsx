@@ -1,12 +1,7 @@
-import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Formik, Form, Field } from 'formik';
 import clsx from 'clsx';
 
-import {
-  setLocation,
-  toggleTruckEquipment,
-  setTruckType,
-} from '../../redux/filters/slice';
 import { fetchTrucks } from '../../redux/trucks/operations';
 import { selectFilters } from '../../redux/filters/selectors';
 import { clearTrucks } from '../../redux/trucks/slice';
@@ -18,145 +13,183 @@ import css from './Filter.module.css';
 
 export default function Filter() {
   const dispatch = useDispatch();
-  const { truckType, truckEquipment } = useSelector(selectFilters);
+  const { truckEquipment } = useSelector(selectFilters);
 
-  const [activeFilters, setActiveFilters] = useState({
+  const initialValues = {
     location: '',
-    truckType: { ...truckType },
-    truckEquipment: { ...truckEquipment },
-  });
-
-  const locationRef = useRef('');
-  const truckTypeRef = useRef({ ...truckType });
-  const truckEquipmentRef = useRef({ ...truckEquipment });
-
-  const handleLocationChange = e => {
-    const input = e.target.value;
-    locationRef.current = input.split(', ').reverse().join(', ');
-    setActiveFilters(prev => ({ ...prev, location: e.target.value }));
+    form: '',
+    transmission: '',
+    truckEquipment: {
+      kitchen: false,
+      AC: false,
+      TV: false,
+      bathroom: false,
+    },
   };
 
-  const handleTruckTypeChange = type => {
-    const newTruckType = { ...truckTypeRef.current };
-
-    if (newTruckType[type]) {
-      newTruckType[type] = false;
-    } else {
-      Object.keys(newTruckType).forEach(key => {
-        newTruckType[key] = false;
-      });
-      newTruckType[type] = true;
-    }
-
-    truckTypeRef.current = newTruckType;
-
-    setActiveFilters(prev => ({
-      ...prev,
-      truckType: { ...newTruckType },
-    }));
-  };
-
-  const handleEquipmentToggle = equipment => {
-    truckEquipmentRef.current[equipment] =
-      !truckEquipmentRef.current[equipment];
-
-    setActiveFilters(prev => ({
-      ...prev,
-      truckEquipment: {
-        ...prev.truckEquipment,
-        [equipment]: truckEquipmentRef.current[equipment],
-      },
-    }));
-  };
-
-  const handleSearch = () => {
+  const handleSubmit = values => {
+    console.log('Form submitted with values:', values);
     dispatch(clearTrucks());
-    dispatch(setLocation(locationRef.current));
 
-    Object.keys(truckTypeRef.current).forEach(type => {
-      if (truckTypeRef.current[type]) {
-        dispatch(setTruckType(type));
-      }
-    });
+    const filters = {
+      location: values.location,
+      form: values.form,
+      transmission: values.transmission,
 
-    Object.keys(truckEquipmentRef.current).forEach(equipment => {
-      if (truckEquipmentRef.current[equipment]) {
-        dispatch(toggleTruckEquipment(equipment));
-      }
-    });
+      truckEquipment: {
+        kitchen: values.truckEquipment.kitchen,
+        AC: values.truckEquipment.AC,
+        TV: values.truckEquipment.TV,
+        bathroom: values.truckEquipment.bathroom,
+      },
+    };
 
-    dispatch(fetchTrucks());
+    console.log('Dispatching fetchTrucks with filters:', filters);
+
+    dispatch(fetchTrucks({ page: 1, filters }));
   };
 
   return (
-    <section className={css.section}>
-      <h2 className={css.title}>Location</h2>
-      <div className={css.inputWrapper}>
-        <svg
-          className={`${css.inputIcon} ${
-            locationRef.current ? css.inputFilled : css.inputEmpty
-          }`}
-          width={20}
-          height={20}
-        >
-          <use xlinkHref={`${icons}#icon-map`} />
-        </svg>
-        <input
-          type="text"
-          placeholder="City"
-          onChange={handleLocationChange}
-          className={css.input}
-        />
-      </div>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={values => handleSubmit(values)}
+    >
+      {({ values, setFieldValue }) => {
+        const handleTruckEquipmentChange = equipment => {
+          setFieldValue('truckEquipment', {
+            ...values.truckEquipment,
+            [equipment]: !values.truckEquipment[equipment], // Toggle the boolean value
+          });
+        };
 
-      <h2 className={css.title}>Filters</h2>
-
-      <h3 className={css.filterTitle}>Vehicle Equipment</h3>
-      <ul className={css.filterList}>
-        {Object.keys(truckEquipment).map(equipment => (
-          <li key={equipment}>
-            <button
-              onClick={() => handleEquipmentToggle(equipment)}
-              className={
-                activeFilters.truckEquipment[equipment]
-                  ? clsx(css.activeFilter, css.btnFilter)
-                  : clsx(css.inActiveFilter, css.btnFilter)
-              }
-            >
-              <svg className={css.icon} width={32} height={32}>
-                <use xlinkHref={`${icons}#${equipmentIcons[equipment]}`} />
+        return (
+          <Form className={css.section}>
+            <h2 className={css.title}>Location</h2>
+            <div className={css.inputWrapper}>
+              <svg
+                className={`${css.inputIcon} ${
+                  values.location ? css.inputFilled : css.inputEmpty
+                }`}
+                width={20}
+                height={20}
+              >
+                <use xlinkHref={`${icons}#icon-map`} />
               </svg>
-              {equipment}
-            </button>
-          </li>
-        ))}
-      </ul>
+              <Field
+                type="text"
+                name="location"
+                placeholder="City"
+                className={css.input}
+              />
+            </div>
 
-      <h3 className={css.filterTitle}>Vehicle Type</h3>
-      <ul className={css.filterList}>
-        {Object.keys(truckType).map(type => (
-          <li key={type} className={css.item}>
-            <button
-              onClick={() => handleTruckTypeChange(type)}
-              className={
-                activeFilters.truckType[type]
-                  ? clsx(css.activeFilter, css.btnFilter)
-                  : clsx(css.inActiveFilter, css.btnFilter)
-              }
+            <h2 className={css.title}>Filters</h2>
+
+            <h3
+              className={css.filterTitle}
+              id="vehicle-equipment-checkbox-group"
             >
-              {' '}
-              <svg className={css.icon} width={32} height={32}>
-                <use xlinkHref={`${icons}#${typeIcons[type]}`} />
-              </svg>
-              {formatString(type)}
-            </button>
-          </li>
-        ))}
-      </ul>
+              Vehicle Equipment
+            </h3>
+            <div
+              className={css.filterList}
+              role="group"
+              aria-labelledby="vehicle-equipment-checkbox-group"
+            >
+              <div>
+                <input
+                  type="checkbox"
+                  name="transmission"
+                  value="automatic"
+                  checked={values.transmission === 'automatic'}
+                  id={'checkbox-transmission'}
+                  onChange={() => {
+                    const newTransmission =
+                      values.transmission === 'automatic' ? '' : 'automatic';
+                    setFieldValue('transmission', newTransmission);
+                  }}
+                  className={css.hiddenCheckbox}
+                />
+                <label
+                  htmlFor={'checkbox-transmission'}
+                  className={clsx(
+                    css.checkboxWrapper,
+                    values.transmission === 'automatic'
+                      ? clsx(css.activeFilter, css.btnFilter)
+                      : clsx(css.inActiveFilter, css.btnFilter)
+                  )}
+                >
+                  <svg className={css.icon} width={32} height={32}>
+                    <use xlinkHref={`${icons}#icon-diagram`} />
+                  </svg>
+                  Automatic
+                </label>
+              </div>
 
-      <button onClick={handleSearch} className={clsx(css.btn, 'btn')}>
-        Search
-      </button>
-    </section>
+              {Object.keys(truckEquipment).map(equipment => (
+                <div key={equipment}>
+                  <input
+                    type="checkbox"
+                    name={`truckEquipment.${equipment}`}
+                    checked={values.truckEquipment[equipment]}
+                    onChange={() => handleTruckEquipmentChange(equipment)}
+                    id={`checkbox-${equipment}`} // Ensure ID is unique and linked to label
+                    className={css.hiddenCheckbox} // Hidden checkbox styling
+                  />
+                  <label
+                    htmlFor={`checkbox-${equipment}`} // Link label with the checkbox
+                    className={clsx(
+                      css.checkboxWrapper,
+                      values.truckEquipment[equipment]
+                        ? css.activeFilter
+                        : css.inActiveFilter
+                    )}
+                  >
+                    <svg className={css.icon} width={32} height={32}>
+                      <use
+                        xlinkHref={`${icons}#${equipmentIcons[equipment]}`}
+                      />
+                    </svg>
+                    <span>{formatString(equipment)}</span>
+                  </label>
+                </div>
+              ))}
+            </div>
+
+            <h3 className={css.filterTitle} id="vessel-type-group">
+              Vessel Type
+            </h3>
+            <div
+              className={css.filterList}
+              role="group"
+              aria-labelledby="vessel-type-group"
+            >
+              {['van', 'fullyIntegrated', 'alcove'].map((type, index) => (
+                <label key={index} className={css.checkboxWrapper}>
+                  <Field
+                    type="radio"
+                    name="form"
+                    value={type}
+                    className={
+                      values.form === type
+                        ? clsx(css.activeFilter, css.btnFilter)
+                        : clsx(css.inActiveFilter, css.btnFilter)
+                    }
+                  />
+                  <svg className={css.icon} width={32} height={32}>
+                    <use xlinkHref={`${icons}#${typeIcons[type]}`} />
+                  </svg>
+                  {formatString(type)}
+                </label>
+              ))}
+            </div>
+
+            <button type="submit" className={clsx(css.btn, 'btn')}>
+              Filter
+            </button>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 }
