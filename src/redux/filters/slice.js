@@ -2,18 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   location: '',
+  transmission: '',
   truckEquipment: {
-    automatic: false,
     kitchen: false,
     AC: false,
     TV: false,
     bathroom: false,
   },
-  truckType: {
-    van: false,
-    fullyIntegrated: false,
-    alcove: false,
-  },
+  form: '',
 };
 
 const filterSlice = createSlice({
@@ -23,21 +19,25 @@ const filterSlice = createSlice({
     setLocation(state, action) {
       state.location = action.payload;
     },
+    setTransmission(state, action) {
+      state.transmission = action.payload;
+    },
     toggleTruckEquipment(state, action) {
       const key = action.payload;
       if (key in state.truckEquipment) {
         state.truckEquipment[key] = !state.truckEquipment[key];
       }
     },
-    setTruckType(state, action) {
-      const selectedType = action.payload;
-      Object.keys(state.truckType).forEach(type => {
-        state.truckType[type] = type === selectedType;
-      });
+    setForm(state, action) {
+      state.form = action.payload;
+    },
+    clearFilters() {
+      return initialState;
     },
   },
 });
 
-export const { setLocation, toggleTruckEquipment, setTruckType } =
+export const { setLocation, setTransmission, toggleTruckEquipment, setForm } =
   filterSlice.actions;
+
 export const filtersReducer = filterSlice.reducer;
