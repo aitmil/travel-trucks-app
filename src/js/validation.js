@@ -6,3 +6,10 @@ export const BookingSchema = Yup.object().shape({
   date: Yup.date().required('Booking date is required').nullable(),
   comment: Yup.string().max(500, 'Comment is too long'),
 });
+
+export const LocationSchema = Yup.object().shape({
+  location: Yup.string().matches(
+    /^[A-Z][a-z]+,\s[A-Z][a-z]+$/,
+    'Must be in the format: Kyiv, Ukraine'
+  ),
+});
