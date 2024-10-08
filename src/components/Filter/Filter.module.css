@@ -28,7 +28,7 @@
 
 .input {
   width: 100%;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 12px;
   padding: 16px 20px 16px 48px;
 
@@ -37,6 +37,19 @@
 
 .input::placeholder {
   color: var(--gray);
+}
+
+.input:hover,
+.input:focus {
+  border: 1px solid var(--button);
+}
+
+.error {
+  position: absolute;
+  top: 120%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: var(--button);
 }
 
 .filterTitle {
@@ -58,30 +71,40 @@
   border-top: 1px solid var(--gray-light);
 }
 
-.btnFilter {
+.hiddenCheckbox {
+  display: none;
+}
+
+.checkboxWrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 
+  cursor: pointer;
+  border-radius: 12px;
   width: 112px;
   height: 96px;
-  border-radius: 12px;
 
-  text-transform: capitalize;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
   text-align: center;
-  background-color: transparent;
-}
-
-.inActiveFilter {
   border: 1px solid var(--gray-light);
+  transition: border-color (--transition);
 }
 
-.activeFilter {
+.hiddenCheckbox:checked + .checkboxWrapper {
+  border: 1px solid var(--button);
+}
+
+.checkboxWrapper:hover {
   border: 1px solid var(--button);
 }
 
 .btn {
   padding: 16px 56.5px;
+  margin-right: 24px;
 }
