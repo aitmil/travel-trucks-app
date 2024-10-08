@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { selectTruck } from '../../redux/trucks/selectors';
 import { fetchTruckById } from '../../redux/trucks/operations';
-import { formatDimension } from '../../js/utils';
+import { formatDimension, formatType } from '../../js/utils';
 
 import icons from '../../assets/icons.svg';
 import css from './TruckFeatures.module.css';
@@ -127,7 +127,7 @@ export default function TruckFeatures() {
       <ul className={css.detailsList}>
         <li className={css.detailsItem}>
           <h5 className={css.details}>Form</h5>
-          <p className={css.details}>{form}</p>
+          <p className={css.details}>{formatType(form)}</p>
         </li>
         <li className={css.detailsItem}>
           <h5 className={css.details}>Length</h5>
