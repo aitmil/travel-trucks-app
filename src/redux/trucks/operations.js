@@ -1,43 +1,47 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { formatLocation } from '../../js/utils';
 
 axios.defaults.baseURL = 'https://66b1f8e71ca8ad33d4f5f63e.mockapi.io/';
 
 export const fetchTrucks = createAsyncThunk(
   'trucks/fetchAll',
-  async ({ page, filters = {}, reset = false }, thunkAPI) => {
+  async ({ page = 1, filters = {}, reset = false }, thunkAPI) => {
     try {
       const params = new URLSearchParams({
         page: page.toString(),
         limit: '4',
       });
 
-      if (filters) {
-        Object.entries(filters.truckEquipment).forEach(
-          ([equipmentKey, value]) => {
-            if (value) {
-              params.append(equipmentKey, 'true');
-            }
-          }
-        );
+      const { location, transmission, truckEquipment, form } = filters;
 
-        if (filters.form) {
-          params.append('form', filters.form);
-        }
+      if (location) {
+        params.append('location', formatLocation(location));
+      }
 
-        if (filters.location) {
-          params.append('location', filters.location);
-        }
+      if (transmission) {
+        params.append('transmission', transmission);
+      }
 
-        if (filters.transmission) {
-          params.append('transmission', filters.transmission);
+      ['AC', 'kitchen', 'TV', 'bathroom'].forEach(equipment => {
+        if (truckEquipment.includes(equipment)) {
+          params.append(equipment, 'true');
         }
+      });
+
+      if (form) {
+        const formType = form === 'van' ? 'panelTruck' : form;
+        params.append('form', formType);
       }
 
       const { data } = await axios.get(`/campers?${params.toString()}`);
       return { reset, ...data };
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      if (error.message === 'Request failed with status code 404') {
+        return thunkAPI.rejectWithValue('Items matching your filter not found');
+      } else {
+        return thunkAPI.rejectWithValue(error.message);
+      }
     }
   }
 );
