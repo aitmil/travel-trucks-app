@@ -5,6 +5,14 @@ export const formatString = str => {
     .replace(/^./, char => char.toUpperCase());
 };
 
+export const formatType = str => {
+  const words = str
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .split(/[\s-]+/)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+  return words.join(' ');
+};
+
 export const formatLocation = location => {
   const parts = location.split(', ').reverse();
   return parts.join(', ');
