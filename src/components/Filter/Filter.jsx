@@ -1,70 +1,82 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form, Field } from 'formik';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import clsx from 'clsx';
+import toast from 'react-hot-toast';
 
 import { fetchTrucks } from '../../redux/trucks/operations';
-import { selectFilters } from '../../redux/filters/selectors';
+import { addFilters, clearFilters } from '../../redux/filters/slice';
 import { clearTrucks } from '../../redux/trucks/slice';
 
-import icons from '../../assets/icons.svg';
 import { formatString, equipmentIcons, typeIcons } from '../../js/utils';
+import { LocationSchema } from '../../js/validation';
+import icons from '../../assets/icons.svg';
 
 import css from './Filter.module.css';
 
 export default function Filter() {
   const dispatch = useDispatch();
-  const { truckEquipment } = useSelector(selectFilters);
+  const [trucksFiltered, setTrucksFiltered] = useState(false);
 
   const initialValues = {
     location: '',
+    transmission: false,
+    truckEquipment: [],
     form: '',
-    transmission: '',
-    truckEquipment: {
-      kitchen: false,
-      AC: false,
-      TV: false,
-      bathroom: false,
-    },
   };
 
-  const handleSubmit = values => {
-    console.log('Form submitted with values:', values);
-    dispatch(clearTrucks());
+  const handleSubmit = (values, { setSubmitting }) => {
+    const { location, transmission, truckEquipment, form } = values;
 
-    const filters = {
-      location: values.location,
-      form: values.form,
-      transmission: values.transmission,
+    if (!location && !truckEquipment.length && !form && !transmission) {
+      toast.error('At least one filter should be chosen');
+      setSubmitting(false);
+      return;
+    }
 
-      truckEquipment: {
-        kitchen: values.truckEquipment.kitchen,
-        AC: values.truckEquipment.AC,
-        TV: values.truckEquipment.TV,
-        bathroom: values.truckEquipment.bathroom,
-      },
+    const newFilters = {
+      location,
+      transmission: transmission ? 'automatic' : '',
+      truckEquipment,
+      form,
     };
 
-    console.log('Dispatching fetchTrucks with filters:', filters);
+    dispatch(addFilters(newFilters));
 
-    dispatch(fetchTrucks({ page: 1, filters }));
+    dispatch(fetchTrucks({ page: 1, filters: newFilters }))
+      .unwrap()
+      .then(() => {
+        setTrucksFiltered(true);
+      })
+      .catch(() => {
+        dispatch(clearTrucks());
+        setTrucksFiltered(false);
+      })
+      .finally(() => {
+        setSubmitting(false);
+      });
+  };
+
+  const handleReset = () => {
+    dispatch(clearFilters());
+    dispatch(fetchTrucks({ page: 1 }));
+    setTrucksFiltered(false);
   };
 
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={values => handleSubmit(values)}
+      validationSchema={LocationSchema}
+      onSubmit={handleSubmit}
     >
-      {({ values, setFieldValue }) => {
-        const handleTruckEquipmentChange = equipment => {
-          setFieldValue('truckEquipment', {
-            ...values.truckEquipment,
-            [equipment]: !values.truckEquipment[equipment], // Toggle the boolean value
-          });
-        };
+      {({ values, isSubmitting }) => {
+        const isAnyFilterSelected =
+          values.location || values.truckEquipment.length > 0 || values.form;
 
         return (
           <Form className={css.section}>
             <h2 className={css.title}>Location</h2>
+            {/* Location Input */}
             <div className={css.inputWrapper}>
               <svg
                 className={`${css.inputIcon} ${
@@ -78,8 +90,13 @@ export default function Filter() {
               <Field
                 type="text"
                 name="location"
-                placeholder="City"
+                placeholder="Kyiv, Ukraine"
                 className={css.input}
+              />
+              <ErrorMessage
+                name="location"
+                component="span"
+                className={css.error}
               />
             </div>
 
@@ -91,33 +108,22 @@ export default function Filter() {
             >
               Vehicle Equipment
             </h3>
+            {/* Vehicle Equipment checkboxes */}
             <div
               className={css.filterList}
               role="group"
               aria-labelledby="vehicle-equipment-checkbox-group"
             >
               <div>
-                <input
+                <Field
                   type="checkbox"
                   name="transmission"
-                  value="automatic"
-                  checked={values.transmission === 'automatic'}
-                  id={'checkbox-transmission'}
-                  onChange={() => {
-                    const newTransmission =
-                      values.transmission === 'automatic' ? '' : 'automatic';
-                    setFieldValue('transmission', newTransmission);
-                  }}
+                  id="checkbox-transmission"
                   className={css.hiddenCheckbox}
                 />
                 <label
-                  htmlFor={'checkbox-transmission'}
-                  className={clsx(
-                    css.checkboxWrapper,
-                    values.transmission === 'automatic'
-                      ? clsx(css.activeFilter, css.btnFilter)
-                      : clsx(css.inActiveFilter, css.btnFilter)
-                  )}
+                  htmlFor="checkbox-transmission"
+                  className={css.checkboxWrapper}
                 >
                   <svg className={css.icon} width={32} height={32}>
                     <use xlinkHref={`${icons}#icon-diagram`} />
@@ -126,24 +132,18 @@ export default function Filter() {
                 </label>
               </div>
 
-              {Object.keys(truckEquipment).map(equipment => (
+              {['kitchen', 'AC', 'TV', 'bathroom'].map(equipment => (
                 <div key={equipment}>
-                  <input
+                  <Field
                     type="checkbox"
-                    name={`truckEquipment.${equipment}`}
-                    checked={values.truckEquipment[equipment]}
-                    onChange={() => handleTruckEquipmentChange(equipment)}
-                    id={`checkbox-${equipment}`} // Ensure ID is unique and linked to label
-                    className={css.hiddenCheckbox} // Hidden checkbox styling
+                    name="truckEquipment"
+                    value={equipment}
+                    id={`checkbox-${equipment}`}
+                    className={css.hiddenCheckbox}
                   />
                   <label
-                    htmlFor={`checkbox-${equipment}`} // Link label with the checkbox
-                    className={clsx(
-                      css.checkboxWrapper,
-                      values.truckEquipment[equipment]
-                        ? css.activeFilter
-                        : css.inActiveFilter
-                    )}
+                    htmlFor={`checkbox-${equipment}`}
+                    className={css.checkboxWrapper}
                   >
                     <svg className={css.icon} width={32} height={32}>
                       <use
@@ -159,34 +159,50 @@ export default function Filter() {
             <h3 className={css.filterTitle} id="vessel-type-group">
               Vessel Type
             </h3>
+            {/* Vehicle Type radio btns */}
             <div
               className={css.filterList}
               role="group"
               aria-labelledby="vessel-type-group"
             >
               {['van', 'fullyIntegrated', 'alcove'].map((type, index) => (
-                <label key={index} className={css.checkboxWrapper}>
+                <div key={index} className={css.filter}>
                   <Field
                     type="radio"
                     name="form"
                     value={type}
-                    className={
-                      values.form === type
-                        ? clsx(css.activeFilter, css.btnFilter)
-                        : clsx(css.inActiveFilter, css.btnFilter)
-                    }
+                    id={`radio-${type}`}
+                    className={css.hiddenCheckbox}
                   />
-                  <svg className={css.icon} width={32} height={32}>
-                    <use xlinkHref={`${icons}#${typeIcons[type]}`} />
-                  </svg>
-                  {formatString(type)}
-                </label>
+                  <label
+                    htmlFor={`radio-${type}`}
+                    className={css.checkboxWrapper}
+                  >
+                    <svg className={css.icon} width={32} height={32}>
+                      <use xlinkHref={`${icons}#${typeIcons[type]}`} />
+                    </svg>
+                    <span>{formatString(type)}</span>
+                  </label>
+                </div>
               ))}
             </div>
 
-            <button type="submit" className={clsx(css.btn, 'btn')}>
+            <button
+              type="submit"
+              className={clsx(css.btn, 'btn')}
+              disabled={isSubmitting}
+            >
               Filter
             </button>
+            {isAnyFilterSelected && trucksFiltered && (
+              <button
+                onClick={handleReset}
+                type="button"
+                className={clsx(css.btn, 'btn')}
+              >
+                Reset
+              </button>
+            )}
           </Form>
         );
       }}
