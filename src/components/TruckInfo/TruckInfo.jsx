@@ -40,6 +40,13 @@ export default function TruckInfo({
               ></img>
             </li>
           ))}
+          <li className={css.item}>
+            <img
+              className={css.img}
+              src={gallery[0].original}
+              alt="photo of truck"
+            ></img>
+          </li>
         </ul>
         <p className={css.text}>{description}</p>
       </section>
