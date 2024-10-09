@@ -8,7 +8,9 @@ export const BookingSchema = Yup.object().shape({
     .min(3, 'Name is too short')
     .max(50, 'Name is too long'),
   email: Yup.string().required('Email is required').email('Invalid email'),
-  bookingDate: Yup.date().required('Booking date is required').nullable(),
+  bookingDate: Yup.date()
+    .required('Booking date is required')
+    .min(new Date(), 'Select only future date'),
   comment: Yup.string().trim().max(500, 'Comment is too long'),
 });
 
