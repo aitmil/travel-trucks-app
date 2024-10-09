@@ -1,0 +1,38 @@
+.field-wrapper {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: 18px;
+  padding-right: 40px;
+  border-radius: 12px;
+  background-color: var(--inputs);
+  border: 1px solid transparent;
+}
+
+.location-input {
+  padding-left: 48px;
+}
+
+.error-input {
+  border: 1px solid var(--button-hover);
+}
+
+.input::placeholder {
+  color: var(--gray);
+}
+
+.textarea {
+  width: 100%;
+  resize: none;
+  min-height: 118px;
+}
+
+.error {
+  position: absolute;
+  font-size: 16px;
+  color: var(--button);
+  right: 10px;
+  bottom: 5px;
+}
