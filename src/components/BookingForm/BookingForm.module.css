@@ -1,7 +1,4 @@
 .section {
-  position: absolute;
-  bottom: 80px;
-  right: 64px;
   width: 641px;
   padding: 44px 57px;
   border: 1px solid var(--gray-light);
