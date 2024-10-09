@@ -1,10 +1,15 @@
 import * as Yup from 'yup';
 
 export const BookingSchema = Yup.object().shape({
-  name: Yup.string().required('Name is required').min(2, 'Name is too short'),
+  name: Yup.string()
+    .trim()
+    .required('Name is required')
+    .matches(/^[A-Za-z\s]+$/, 'Name can only contain letters and spaces')
+    .min(3, 'Name is too short')
+    .max(50, 'Name is too long'),
   email: Yup.string().required('Email is required').email('Invalid email'),
-  date: Yup.date().required('Booking date is required').nullable(),
-  comment: Yup.string().max(500, 'Comment is too long'),
+  bookingDate: Yup.date().required('Booking date is required').nullable(),
+  comment: Yup.string().trim().max(500, 'Comment is too long'),
 });
 
 export const LocationSchema = Yup.object().shape({
