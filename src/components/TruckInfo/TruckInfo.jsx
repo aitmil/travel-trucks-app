@@ -1,6 +1,7 @@
 import { formatLocation, formatPrice } from '../../js/utils';
 import icons from '../../assets/icons.svg';
 import css from './TruckInfo.module.css';
+import GoBackButton from '../GoBackBtn/GoBackBtn';
 
 export default function TruckInfo({
   truck: { name, price, rating, reviews, description, gallery, location },
@@ -8,6 +9,7 @@ export default function TruckInfo({
   return (
     <>
       <section className={css.section}>
+        <GoBackButton />
         <h3 className={css.title}>{name}</h3>
 
         <div className={css.reviewBox}>
