@@ -2,7 +2,6 @@
   border-radius: 10px;
   padding: 44px 52px;
   width: 631px;
-  height: 579px;
 
   background-color: var(--inputs);
 }
@@ -43,6 +42,10 @@
 .detailsItem {
   display: flex;
   justify-content: space-between;
+}
+
+.detailsItem:not(:last-child) {
+  margin-bottom: 16px;
 }
 
 .details {
