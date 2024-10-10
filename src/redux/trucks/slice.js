@@ -30,9 +30,16 @@ const trucksSlice = createSlice({
     builder
       .addCase(fetchTrucks.pending, handlePending)
       .addCase(fetchTrucks.fulfilled, (state, action) => {
-        state.items = action.payload.items;
-        state.total = action.payload.total;
         state.loading = false;
+        const { items, reset } = action.payload;
+
+        if (reset) {
+          state.items = items;
+        } else {
+          state.items = [...state.items, ...items];
+        }
+
+        state.total = action.payload.total;
       })
       .addCase(fetchTrucks.rejected, handleRejected)
       .addCase(fetchTruckById.pending, handlePending)
