@@ -37,6 +37,7 @@ export const fetchTrucks = createAsyncThunk(
       const { data } = await axios.get(`/campers?${params.toString()}`);
       return { reset, ...data };
     } catch (error) {
+      console.error('Error fetching trucks:', error);
       if (error.message === 'Request failed with status code 404') {
         return thunkAPI.rejectWithValue('Items matching your filter not found');
       } else {
