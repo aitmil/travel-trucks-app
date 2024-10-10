@@ -7,7 +7,7 @@
   padding: 8px;
   margin-bottom: 48px;
   width: 120px;
-  border: 1px solid var(--button);
+  border: 1px solid var(--gray-light);
   border-radius: 200px;
 
   font-weight: 500;
