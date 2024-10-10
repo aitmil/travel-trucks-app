@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import clsx from 'clsx';
@@ -13,10 +13,13 @@ import { LocationSchema } from '../../js/validation';
 import icons from '../../assets/icons.svg';
 
 import css from './Filter.module.css';
+import { selectFilters } from '../../redux/filters/selectors';
 
 export default function Filter() {
-  const dispatch = useDispatch();
   const [trucksFiltered, setTrucksFiltered] = useState(false);
+  const filters = useSelector(selectFilters);
+
+  const dispatch = useDispatch();
 
   const initialValues = {
     location: '',
@@ -43,7 +46,7 @@ export default function Filter() {
 
     dispatch(addFilters(newFilters));
 
-    dispatch(fetchTrucks({ page: 1, filters: newFilters }))
+    dispatch(fetchTrucks({ page: 1, filters: newFilters, reset: true }))
       .unwrap()
       .then(() => {
         setTrucksFiltered(true);
@@ -57,9 +60,10 @@ export default function Filter() {
       });
   };
 
-  const handleReset = () => {
+  const handleReset = resetForm => {
     dispatch(clearFilters());
-    dispatch(fetchTrucks({ page: 1 }));
+    dispatch(fetchTrucks({ page: 1, filters, reset: true }));
+    resetForm();
     setTrucksFiltered(false);
   };
 
@@ -69,7 +73,7 @@ export default function Filter() {
       validationSchema={LocationSchema}
       onSubmit={handleSubmit}
     >
-      {({ values, isSubmitting }) => {
+      {({ values, isSubmitting, resetForm }) => {
         const isAnyFilterSelected =
           values.location || values.truckEquipment.length > 0 || values.form;
 
@@ -196,7 +200,7 @@ export default function Filter() {
             </button>
             {isAnyFilterSelected && trucksFiltered && (
               <button
-                onClick={handleReset}
+                onClick={() => handleReset(resetForm)}
                 type="button"
                 className={clsx(css.btn, 'btn')}
               >
