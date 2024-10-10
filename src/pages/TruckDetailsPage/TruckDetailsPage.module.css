@@ -28,3 +28,9 @@
 .active {
   border-bottom: 5px solid var(--button);
 }
+
+.bottom {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
