@@ -5,7 +5,6 @@ import { enUS } from 'date-fns/locale';
 import { format, isToday } from 'date-fns';
 
 import FormField from '../FormField/FormField';
-import { saveToSessionStorage } from '../../js/sessionStorage';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import './DatePicker.css';
@@ -54,10 +53,7 @@ const Datepicker = ({ onChange, selected }) => {
     <DatePicker
       locale="custom-en"
       selected={selected}
-      onChange={date => {
-        onChange(date);
-        saveToSessionStorage('bookingDate', date);
-      }}
+      onChange={onChange}
       dateFormat="yyyy/MM/dd"
       customInput={<CustomInput />}
       dayClassName={customDayClassName}

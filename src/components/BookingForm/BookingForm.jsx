@@ -5,16 +5,15 @@ import clsx from 'clsx';
 import FormField from '../FormField/FormField';
 import Datepicker from '../DatePicker/DatePicker';
 import { BookingSchema } from '../../js/validation';
-import { getItemFromSessionStorage } from '../../js/sessionStorage';
 
 import css from './BookingForm.module.css';
 
 export default function BookingForm() {
   const initialValues = {
-    name: getItemFromSessionStorage('name') ?? '',
-    email: getItemFromSessionStorage('email') ?? '',
-    bookingDate: getItemFromSessionStorage('bookingDate') ?? '',
-    comment: getItemFromSessionStorage('comment') ?? '',
+    name: '',
+    email: '',
+    bookingDate: '',
+    comment: '',
   };
 
   const mockPostRequest = values => {

@@ -1,6 +1,5 @@
 import { forwardRef } from 'react';
 import { useField, Field, ErrorMessage } from 'formik';
-import { saveToSessionStorage } from '../../js/sessionStorage';
 import clsx from 'clsx';
 
 import css from './FormField.module.css';
@@ -10,7 +9,6 @@ const FormField = forwardRef(({ extraClass, icon, ...props }, ref) => {
 
   const handleChange = event => {
     const { value } = event.target;
-    saveToSessionStorage(props.name, value);
     helpers.setValue(value);
   };
 
