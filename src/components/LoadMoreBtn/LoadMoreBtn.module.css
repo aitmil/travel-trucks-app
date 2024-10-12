@@ -4,9 +4,11 @@
   padding: 16px 32px;
   margin-top: 40px;
   background-color: transparent;
+  color: var(--main);
   transition: border var(--transition);
 }
 
-.loadMore:hover {
+.loadMore:hover,
+.loadMore:focus {
   border-color: var(--button-hover);
 }

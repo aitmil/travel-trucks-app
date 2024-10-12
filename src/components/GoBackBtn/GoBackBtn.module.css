@@ -18,7 +18,8 @@
   transition: border-color var(--transition);
 }
 
-.backLink:hover {
+.backLink:hover,
+.backLink:focus {
   border: 1px solid var(--button-hover);
 }
 
