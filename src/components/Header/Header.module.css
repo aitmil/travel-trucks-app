@@ -1,5 +1,5 @@
 .header {
-  padding: 28px 64px;
+  padding: 28px 16px;
   border-bottom: 1px solid var(--badges);
 
   background-color: var(--inputs);
@@ -8,8 +8,34 @@
 .container {
   display: flex;
   align-items: center;
-  gap: 450px;
+  justify-content: space-between;
 
-  max-width: 1312px;
   margin: 0 auto;
+}
+
+.logo {
+  width: 120px;
+  height: 56px;
+}
+
+@media (min-width: 768px) {
+  .header {
+    padding: 28px 32px;
+  }
+
+  .logo {
+    width: 136px;
+    height: 64px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    justify-content: start;
+    gap: 450px;
+  }
+
+  .header {
+    padding: 28px 64px;
+  }
 }

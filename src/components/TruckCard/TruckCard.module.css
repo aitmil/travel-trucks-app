@@ -1,8 +1,7 @@
 .img {
   border-radius: 10px;
-  width: 292px;
   object-fit: cover;
-  height: 320px;
+  margin-bottom: 24px;
 }
 
 .titleBox {
@@ -65,7 +64,6 @@
 }
 
 .text {
-  width: 525px;
   margin-bottom: 24px;
 
   color: var(--text);
@@ -76,7 +74,6 @@
   flex-wrap: wrap;
   gap: 8px;
 
-  width: 392px;
   margin-bottom: 40px;
 }
 
@@ -95,4 +92,32 @@
 
 .btn {
   padding: 16px 40px;
+}
+
+@media (min-width: 1024px) {
+  .img {
+    margin-bottom: 0;
+    width: 292px;
+    height: 320px;
+  }
+
+  .list {
+    width: 320px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .img {
+    margin-bottom: 0;
+    width: 292px;
+    height: 320px;
+  }
+
+  .text {
+    width: 525px;
+  }
+
+  .list {
+    width: 392px;
+  }
 }

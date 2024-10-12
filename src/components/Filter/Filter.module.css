@@ -7,7 +7,7 @@
 
 .inputWrapper {
   position: relative;
-  margin: 8px 0 40px;
+  margin: 8px 0 20px;
 }
 
 .inputIcon {
@@ -57,17 +57,18 @@
   font-size: 20px;
   line-height: 120%;
 
-  margin: 32px 0 24px;
+  margin: 20px 0 12px;
 }
 
 .filterList {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 12px;
 
-  width: 360px;
-  padding-top: 24px;
-  margin-bottom: 40px;
+  width: 100%;
+  padding-top: 12px;
+  margin-bottom: 20px;
   border-top: 1px solid var(--gray-light);
 }
 
@@ -84,8 +85,8 @@
 
   cursor: pointer;
   border-radius: 12px;
-  width: 112px;
-  height: 96px;
+  width: 105px;
+  height: 84px;
 
   font-weight: 500;
   font-size: 16px;
@@ -104,7 +105,60 @@
   border: 1px solid var(--button);
 }
 
+.btns {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
 .btn {
-  padding: 16px 56.5px;
-  margin-right: 24px;
+  padding: 16px 48px;
+}
+
+@media (min-width: 768px) {
+  .input {
+    width: 236px;
+  }
+
+  .filterList {
+    width: 236px;
+    justify-content: start;
+  }
+
+  .btns {
+    justify-content: start;
+  }
+
+  .btn {
+    padding: 16px 30px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .inputWrapper {
+    margin-bottom: 40px;
+  }
+
+  .input {
+    width: 360px;
+  }
+
+  .filterTitle {
+    margin: 32px 0 24px;
+  }
+
+  .filterList {
+    width: 360px;
+    padding-top: 24px;
+    margin-bottom: 40px;
+  }
+
+  .checkboxWrapper {
+    width: 112px;
+    height: 96px;
+  }
+
+  .btn {
+    padding: 16px 56.5px;
+  }
 }

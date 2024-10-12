@@ -191,22 +191,25 @@ export default function Filter() {
               ))}
             </div>
 
-            <button
-              type="submit"
-              className={clsx(css.btn, 'btn')}
-              disabled={isSubmitting}
-            >
-              Filter
-            </button>
-            {isAnyFilterSelected && trucksFiltered && (
+            <div className={css.btns}>
               <button
-                onClick={() => handleReset(resetForm)}
-                type="button"
+                type="submit"
                 className={clsx(css.btn, 'btn')}
+                disabled={isSubmitting}
               >
-                Reset
+                Filter
               </button>
-            )}
+
+              {isAnyFilterSelected && trucksFiltered && (
+                <button
+                  onClick={() => handleReset(resetForm)}
+                  type="button"
+                  className={clsx(css.btn, 'btn')}
+                >
+                  Reset
+                </button>
+              )}
+            </div>
           </Form>
         );
       }}

@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <header className={css.header}>
       <div className={css.container}>
-        <svg height={64} width={136}>
+        <svg className={css.logo}>
           <use href={`${icons}#icon-logo`} />
         </svg>
         <Navigation />

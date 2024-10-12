@@ -1,11 +1,5 @@
 .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 64px;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 48px 64px 52px;
+  padding: 24px 16px;
 }
 
 .wrapper {
@@ -13,4 +7,28 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 24px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    display: flex;
+    gap: 32px;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    padding: 24px 32px;
+    margin: 0 auto;
+  }
+
+  .wrapper {
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    padding: 48px 64px 52px;
+    gap: 64px;
+  }
 }
