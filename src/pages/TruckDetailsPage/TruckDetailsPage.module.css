@@ -2,7 +2,7 @@
   position: relative;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 48px 64px 80px;
+  padding: 24px 16px 40px;
 }
 
 .listLinks {
@@ -11,7 +11,7 @@
 
   width: 100%;
   padding-bottom: 24px;
-  margin-bottom: 44px;
+  margin-bottom: 24px;
   border-bottom: 1px solid var(--gray-light);
 }
 
@@ -29,8 +29,31 @@
   border-bottom: 5px solid var(--button);
 }
 
-.bottom {
-  display: flex;
-  gap: 40px;
-  justify-content: center;
+@media (min-width: 768px) {
+  .container {
+    padding: 24px 32px 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    padding: 48px 64px 80px;
+  }
+
+  .listLinks {
+    margin-bottom: 44px;
+  }
+
+  .bottom {
+    gap: 40px;
+  }
 }

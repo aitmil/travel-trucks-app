@@ -1,5 +1,5 @@
 .section {
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 
 .title {
@@ -44,9 +44,10 @@
 .list {
   display: flex;
   flex-wrap: wrap;
-  gap: 48px;
+  justify-content: center;
+  gap: 12px;
 
-  margin: 28px 0;
+  margin: 16px 0;
 }
 
 .img {
@@ -58,4 +59,15 @@
 
 .text {
   color: var(--text);
+}
+
+@media (min-width: 1440px) {
+  .section {
+    margin-bottom: 60px;
+  }
+
+  .list {
+    gap: 48px;
+    margin: 28px 0;
+  }
 }

@@ -5,7 +5,7 @@
   gap: 5px;
 
   padding: 8px;
-  margin-bottom: 48px;
+  margin-bottom: 24px;
   width: 120px;
   border: 1px solid var(--gray-light);
   border-radius: 200px;
@@ -28,4 +28,10 @@
 
 .backLink:hover .icon {
   fill: var(--button-hover);
+}
+
+@media (min-width: 1440px) {
+  .backLink {
+    margin-bottom: 48px;
+  }
 }

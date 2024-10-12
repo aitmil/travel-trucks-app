@@ -1,7 +1,7 @@
 .section {
   border-radius: 10px;
-  padding: 44px 52px;
-  width: 631px;
+  padding: 24px 12px;
+  margin-bottom: 24px;
 
   background-color: var(--inputs);
 }
@@ -11,7 +11,7 @@
   gap: 8px;
   flex-wrap: wrap;
 
-  margin-bottom: 100px;
+  margin-bottom: 40px;
 }
 
 .item {
@@ -52,4 +52,33 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 44px 52px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    width: 463px;
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .section {
+    width: 599px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .section {
+    width: 631px;
+  }
+
+  .list {
+    margin-bottom: 100px;
+  }
 }
