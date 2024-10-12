@@ -6,6 +6,7 @@ import Error from '../../components/Error/Error';
 import TruckList from '../../components/TruckList/TruckList';
 import Filter from '../../components/Filter/Filter';
 import LoadMoreBtn from '../../components/LoadMoreBtn/LoadMoreBtn';
+import ScrollToTopButton from '../../components/ScrollToTopBtn/ScrollToTopBtn';
 
 import {
   selectLoading,
@@ -37,6 +38,7 @@ export default function CatalogPage() {
         {trucks.length > 0 && <TruckList />}
         <LoadMoreBtn />
       </div>
+      <ScrollToTopButton />
     </main>
   );
 }

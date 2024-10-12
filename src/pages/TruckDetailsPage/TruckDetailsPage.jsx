@@ -13,6 +13,7 @@ import Loader from '../../components/Loader/Loader';
 import Error from '../../components/Error/Error';
 import TruckInfo from '../../components/TruckInfo/TruckInfo';
 import BookingForm from '../../components/BookingForm/BookingForm';
+import ScrollToTopButton from '../../components/ScrollToTopBtn/ScrollToTopBtn';
 
 import {
   selectTruck,
@@ -81,6 +82,8 @@ export default function TruckDetailsPage() {
         </Suspense>
         <BookingForm />
       </div>
+
+      <ScrollToTopButton />
     </main>
   );
 }
